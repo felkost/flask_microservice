@@ -1,0 +1,7 @@
+name: ox
+channels:
+  - conda-forge
+dependencies:
+  - conda-forge::python=3.8
+  - conda-forge::osmnx
+  - conda-forge::flask

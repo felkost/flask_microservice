@@ -1,0 +1,22 @@
+# FROM python:3.6.4
+FROM continuumio/miniconda3
+
+RUN conda update -n base -c defaults conda
+
+# set working directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+# Create the environment:
+COPY ./environment.yml /usr/src/app/environment.yml
+RUN conda env create -f /usr/src/app/environment.yml
+
+# activate environment
+ENV PATH /opt/conda/envs/ox/bin:$PATH
+RUN /bin/bash -c "source activate ox"
+
+# add app
+COPY . /usr/src/app
+
+# run server
+CMD python manage.py run -h 0.0.0.0
