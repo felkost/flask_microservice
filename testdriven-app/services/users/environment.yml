@@ -2,6 +2,8 @@ name: ox
 channels:
   - conda-forge
 dependencies:
-  - conda-forge::python=3.8
+  - conda-forge::python=3.7.6
   - conda-forge::osmnx
   - conda-forge::flask
+  - conda-forge::flask-sqlalchemy
+  - conda-forge::psycopg2

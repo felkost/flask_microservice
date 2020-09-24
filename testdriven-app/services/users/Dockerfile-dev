@@ -1,7 +1,11 @@
 # FROM python:3.6.4
 FROM continuumio/miniconda3
 
-RUN conda update -n base -c defaults conda
+# install dependencies
+RUN apt update && \
+    apt-get install -y netcat-openbsd
+
+#RUN conda update -n base -c defaults conda
 
 # set working directory
 RUN mkdir -p /usr/src/app
@@ -15,8 +19,13 @@ RUN conda env create -f /usr/src/app/environment.yml
 ENV PATH /opt/conda/envs/ox/bin:$PATH
 RUN /bin/bash -c "source activate ox"
 
+# add entrypoint.sh
+COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
+#RUN chmod +x /usr/src/app/entrypoint.sh
+
 # add app
 COPY . /usr/src/app
 
 # run server
-CMD python manage.py run -h 0.0.0.0
+#CMD python manage.py run -h 0.0.0.0
+CMD ["/usr/src/app/entrypoint.sh"]

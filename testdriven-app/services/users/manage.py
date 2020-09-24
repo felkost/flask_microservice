@@ -8,8 +8,17 @@
 PS: для образа из Docker используется порт 5001, поэтому результ открыть по адресу http://localhost:5001/users/ping
 """
 from flask.cli import FlaskGroup
-from project import app
+from project import app, db
 
 cli = FlaskGroup(app)
+
+
+@cli.command('recreate_db')
+def recreate_db():
+    db.drop_all()
+    db.create_all()
+    db.session.commit()
+
+
 if __name__ == '__main__':
     cli()
