@@ -6,7 +6,7 @@ def test_ping(test_app):
     client = test_app.test_client()
 
     # When
-    resp = client.get('/users/ping')
+    resp = client.get('/ping')
 
     data = json.loads(resp.data.decode())
 

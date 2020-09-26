@@ -8,9 +8,11 @@
 PS: для образа из Docker используется порт 5001, поэтому результ открыть по адресу http://localhost:5001/users/ping
 """
 from flask.cli import FlaskGroup
-from project import app, db
+from project import create_app, db
+from project.api.models import User  # без этой строки не пересоздается БД в 'recreate_db'
 
-cli = FlaskGroup(app)
+app = create_app()
+cli = FlaskGroup(create_app=create_app)
 
 
 @cli.command('recreate_db')
