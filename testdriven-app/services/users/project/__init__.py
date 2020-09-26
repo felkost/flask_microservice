@@ -1,11 +1,13 @@
 import os
 from flask import Flask, jsonify
 import osmnx as ox
-import datetime
+from flask_restx import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 
 # instantiate the app
 app = Flask(__name__)
+
+api = Api(app)
 
 # set config
 app_settings = os.getenv('APP_SETTINGS')
@@ -29,16 +31,34 @@ class User(db.Model):
 
 
 # routes
-@app.route('/users/ping', methods=['GET'])
-def ping_pong():
-    G = ox.graph_from_place('Lutsk, Volyn, Ukraine', network_type='drive')
-    G_proj = ox.project_graph(G)
-    nodes_proj = ox.graph_to_gdfs(G_proj, edges=False)
-    graph_area_m = nodes_proj.unary_union.convex_hull.area
-    return jsonify({
-        'status': 'success',
-        'message': 'pong!',
-        'message_my': 'Nice to meet you! Is my Docker',
-        'ox.__version__': ox.__version__,
-        'graph_area_m': graph_area_m
-    })
+# @app.route('/users/ping', methods=['GET'])
+# def ping_pong():
+#     G = ox.graph_from_place('Lutsk, Volyn, Ukraine', network_type='drive')
+#     G_proj = ox.project_graph(G)
+#     nodes_proj = ox.graph_to_gdfs(G_proj, edges=False)
+#     graph_area_m = nodes_proj.unary_union.convex_hull.area
+#     return jsonify({
+#         'status': 'success',
+#         'message': 'pong!',
+#         'message_my': 'Nice to meet you! Is my Docker',
+#         'ox.__version__': ox.__version__,
+#         'graph_area_m': graph_area_m
+#     })
+
+
+class Ping(Resource):
+    def get(self):
+        G = ox.graph_from_place('Lutsk, Volyn, Ukraine', network_type='drive')
+        G_proj = ox.project_graph(G)
+        nodes_proj = ox.graph_to_gdfs(G_proj, edges=False)
+        graph_area_m = nodes_proj.unary_union.convex_hull.area
+        return {
+            'status': 'success',
+            'message': 'pong!',
+            'message_my': 'Nice to meet you! Is my Docker',
+            'ox.__version__': ox.__version__,
+            'graph_area_m': graph_area_m
+        }
+
+
+api.add_resource(Ping, '/ping')
