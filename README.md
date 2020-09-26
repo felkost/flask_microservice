@@ -43,4 +43,35 @@ Create flask microservice with React
 - Для зупинки сервісів виконати  
 `docker-compose -f docker-compose-dev.yml down`
 
+PS:  
+При появі помилок при додаванні даних в БД, останню слід перестворити:  
+`docker-compose -f docker-compose-dev.yml exec users python manage.py recreate_db`  
+
+Для тестування використовують команди:  
+- normal run   
+`$ docker-compose -f docker-compose-dev.yml exec users python -m pytest "project/tests"`
+
+- disable warnings  
+`$ docker-compose -f docker-compose-dev.yml exec users python -m pytest "project/tests" -p no:warnings`
+
+- run only the last failed tests  
+`$ docker-compose -f docker-compose-dev.yml exec users python -m pytest "project/tests" --lf`
+
+- run only the tests with names that match the string expression  
+`$ docker-compose -f docker-compose-dev.yml exec users python -m pytest "project/tests" -k "config and not test_development_config"`
+
+- stop the test session after the first failure  
+`$ docker-compose -f docker-compose-dev.yml exec users python -m pytest "project/tests" -x`
+
+- enter PDB after first failure then end the test session  
+`$ docker-compose -f docker-compose-dev.yml exec users python -m pytest "project/tests" -x --pdb`
+
+- stop the test run after two failures  
+`$ docker-compose -f docker-compose-dev.yml exec users python -m pytest "project/tests" --maxfail=2`
+
+- show local variables in tracebacks  
+`$ docker-compose -f docker-compose-dev.yml exec users python -m pytest "project/tests" -l`
+
+- list the 2 slowest tests  
+`$ docker-compose -f docker-compose-dev.yml exec users python -m pytest "project/tests" --durations=2` 
 
