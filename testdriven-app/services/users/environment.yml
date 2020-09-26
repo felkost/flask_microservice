@@ -7,3 +7,4 @@ dependencies:
   - conda-forge::flask
   - conda-forge::flask-sqlalchemy
   - conda-forge::psycopg2
+  - conda-forge::pytest
