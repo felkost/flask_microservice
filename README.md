@@ -26,7 +26,7 @@ Create flask microservice with React
 -- перестворити БД  
 `docker-compose -f docker-compose-dev.yml exec users python manage.py recreate_db`  
 -- увійти в postgres  
-`docker-compose -f docker-compose-dev.yml exec users-db psql -U postgres`
+`docker-compose -f docker-compose-dev.yml exec users-db psql -U postgres`  
 -- виконати команди для перегляду структури БД в postgres  
 `postgres=# \c users_dev`  
 *`You are now connected to database "users_dev" as user "postgres".`*  
@@ -42,6 +42,20 @@ Create flask microservice with React
 
 - Для зупинки сервісів виконати  
 `docker-compose -f docker-compose-dev.yml down`
+
+**Покриття кода тестами та якість коду**  
+- Перевірка, яка частина коду покрита тестами (результат можна побачити в testdriven-app/services/users/htmlcov/index.html)  
+`docker-compose -f docker-compose-dev.yml exec users python -m pytest "project/tests" -p no:warnings --cov="project" --cov-report html`  
+- перевірка коду на відповідність стандарту PEP8  
+`docker-compose -f docker-compose-dev.yml exec users flake8 project`  
+- перевірка коду на відповідність форматування файлів   
+`docker-compose -f docker-compose-dev.yml exec users black project --check`  
+`docker-compose -f docker-compose-dev.yml exec users black project --diff`  
+`docker-compose -f docker-compose-dev.yml exec users black project`  
+- перевірка коду на відповідність сортування модулів під час їх імпорту  
+`docker-compose -f docker-compose-dev.yml exec users /bin/sh -c "isort project/**/*.py --check-only"`  
+`docker-compose -f docker-compose-dev.yml exec users /bin/sh -c "isort project/**/*.py --diff"`  
+`docker-compose -f docker-compose-dev.yml exec users /bin/sh -c "isort project/**/*.py"`  
 
 PS:  
 При появі помилок при додаванні даних в БД, останню слід перестворити:  
