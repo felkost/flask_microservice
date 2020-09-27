@@ -10,8 +10,11 @@ Create flask microservice with React
 або  
 - `docker-compose -f docker-compose-dev.yml up` 
 
-Для образа из Docker використовується порт 5001, результат знайти за адресою  
- http://localhost:5001/ping
+Для образа из Docker використовується порт 5001:  
+- перевірка шляху ping (отримання ынформації з OSMX) http://localhost:5001/ping  
+- якщо створені тестові дані, то результа отримати через http://localhost:5001/users  
+- якщо створені тестові дані, то адмін-панель відкрити через http://localhost:5001/admin/user/  
+
 
 **Запуск та тестування кількох сервісів**  
 
@@ -61,6 +64,9 @@ PS:
 При появі помилок при додаванні даних в БД, останню слід перестворити:  
 `docker-compose -f docker-compose-dev.yml exec users python manage.py recreate_db`  
 
+Для додавання тестових даних виконати  
+`docker-compose -f docker-compose-dev.yml exec users python manage.py seed_db`  
+
 Для тестування використовують команди:  
 - normal run   
 `$ docker-compose -f docker-compose-dev.yml exec users python -m pytest "project/tests"`
@@ -87,5 +93,8 @@ PS:
 `$ docker-compose -f docker-compose-dev.yml exec users python -m pytest "project/tests" -l`
 
 - list the 2 slowest tests  
-`$ docker-compose -f docker-compose-dev.yml exec users python -m pytest "project/tests" --durations=2` 
+`$ docker-compose -f docker-compose-dev.yml exec users python -m pytest "project/tests" --durations=2`  
+
+- тестування модульних тестів (без підключення до БД)    
+`docker-compose -f docker-compose-dev.yml exec users pytest "project/tests/test_users_unit.py" -p no:warnings -k "unit" -n auto`  
 

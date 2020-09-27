@@ -1,6 +1,6 @@
 import json
 import pytest
-from project.api.models import User
+from project.api.users.models import User
 
 
 # --------------- POST --------------------------

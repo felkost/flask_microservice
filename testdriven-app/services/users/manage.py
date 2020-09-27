@@ -9,7 +9,7 @@ PS: для образа из Docker используется порт 5001, по
 """
 from flask.cli import FlaskGroup
 from project import create_app, db
-from project.api.models import User  # без этой строки не пересоздается БД в 'recreate_db'
+from project.api.users.models import User  # без этой строки не пересоздается БД в 'recreate_db'
 
 app = create_app()
 cli = FlaskGroup(create_app=create_app)
