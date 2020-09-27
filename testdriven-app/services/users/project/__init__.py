@@ -22,14 +22,18 @@ def create_app(script_info=None):
     db.init_app(app)
     admin.init_app(app)
 
+    # register api
+    from project.api import api
+    api.init_app(app)
+
     # register blueprints
-    from project.api.ping import ping_blueprint
-
-    app.register_blueprint(ping_blueprint)
-
-    from project.api.users.views import users_blueprint
-
-    app.register_blueprint(users_blueprint)
+    # from project.api.ping import ping_blueprint
+    #
+    # app.register_blueprint(ping_blueprint)
+    #
+    # from project.api.users.views import users_blueprint
+    #
+    # app.register_blueprint(users_blueprint)
 
     # shell context for flask cli
     @app.shell_context_processor

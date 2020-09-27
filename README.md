@@ -14,6 +14,7 @@ Create flask microservice with React
 - перевірка шляху ping (отримання ынформації з OSMX) http://localhost:5001/ping  
 - якщо створені тестові дані, то результа отримати через http://localhost:5001/users  
 - якщо створені тестові дані, то адмін-панель відкрити через http://localhost:5001/admin/user/  
+- пергляд документації за посиланням http://localhost:5001/doc/  
 
 
 **Запуск та тестування кількох сервісів**  
