@@ -13,3 +13,5 @@ dependencies:
   - conda-forge::flake8
   - conda-forge::black
   - conda-forge::isort
+  - conda-forge::flask-admin
+  - pytest-xdist
